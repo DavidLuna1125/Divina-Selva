@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Divina Selva Jáshnan | Esencias Naturales Andino-Amazónicas</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome para Iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts: Playfair Display + Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              magenta: '#8B1E62',
+              'magenta-dark': '#631344',
+              teal: '#18988b',
+              'teal-dark': '#106b62',
+              cream: '#FCF9F5',
+              sand: '#F4EEE6',
+              dark: '#1D2A27'
+            }
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background: linear-gradient(135deg, rgba(252, 249, 245, 0.94) 0%, rgba(244, 238, 230, 0.92) 100%);
+      color: #1D2A27;
+      min-height: 100vh;
+    }
+
+    .putumayo-bg-overlay {
+      background: 
+        linear-gradient(180deg, rgba(29, 42, 39, 0.88) 0%, rgba(99, 19, 68, 0.88) 100%),
+        url('https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+    }
+    
+    .glass-nav {
+      background: rgba(252, 249, 245, 0.92);
+      backdrop-filter: blur(14px);
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+    }
+    
+    .glass-cream {
+      background: rgba(252, 249, 245, 0.88);
+      backdrop-filter: blur(8px);
+    }
+
+    .badge-blur {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(4px);
+    }
+  </style>
+</head>
+<body class="font-sans antialiased text-gray-800 flex flex-col min-h-screen relative overflow-x-hidden">
+
+  <!-- ================= MARCA DE AGUA (LOGO EN EL FONDO ESTÁTICO) ================= -->
+  <div class="fixed inset-0 z-0 pointer-events-none flex items-center justify-center overflow-hidden">
+    <img 
+      src="img/Logo Divina Selva Jáshnan_2.jpeg" 
+      alt="Watermark Divina Selva" 
+      class="w-[80vw] max-w-[700px] h-auto object-contain opacity-15 filter drop-shadow-lg mix-blend-multiply select-none"
+      onerror="this.onerror=null; this.src='img/Logo Divina Selva Jáshnan.jpeg';"
+    />
+  </div>
+
+  <!-- Capa de Fondo Botánico del Putumayo con Difuminado -->
+  <div class="fixed inset-0 z-0 pointer-events-none bg-[url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-10"></div>
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-brand-sand/60 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Nombre de la marca estilizado -->
+        <a href="#" class="flex flex-col group">
+          <span class="font-serif text-2xl font-bold text-brand-magenta tracking-tight group-hover:text-brand-teal transition-colors">
+            Divina Selva <span class="italic font-normal text-brand-teal">Jáshnan</span>
+          </span>
+          <span class="text-[10px] uppercase tracking-widest text-gray-500 font-semibold -mt-1">Esencias Andino-Amazónicas</span>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-700">
+          <a href="#inicio" class="hover:text-brand-magenta transition-colors">Inicio</a>
+          <a href="#ritual" class="hover:text-brand-teal transition-colors">El Ritual</a>
+          <a href="#productos" class="hover:text-brand-magenta transition-colors">Productos</a>
+          <a href="#faq" class="hover:text-brand-teal transition-colors">Preguntas Frecuentes</a>
+          <a href="#contacto" class="hover:text-brand-magenta transition-colors">Contacto</a>
+        </nav>
+
+        <!-- Mobile Menu Toggle Button -->
+        <div class="flex items-center md:hidden">
+          <button 
+            id="mobile-menu-btn"
+            onclick="toggleMobileMenu()"
+            class="p-2 rounded-lg text-gray-700 hover:text-brand-magenta hover:bg-brand-sand transition-colors"
+            aria-label="Abrir Menú"
+          >
+            <i class="fa-solid fa-bars text-2xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden bg-brand-cream/95 backdrop-blur-md border-b border-brand-sand px-6 py-4 space-y-3">
+      <a href="#inicio" onclick="toggleMobileMenu()" class="block py-2 text-gray-700 hover:text-brand-magenta font-medium">Inicio</a>
+      <a href="#ritual" onclick="toggleMobileMenu()" class="block py-2 text-gray-700 hover:text-brand-teal font-medium">El Ritual</a>
+      <a href="#productos" onclick="toggleMobileMenu()" class="block py-2 text-gray-700 hover:text-brand-magenta font-medium">Productos</a>
+      <a href="#faq" onclick="toggleMobileMenu()" class="block py-2 text-gray-700 hover:text-brand-teal font-medium">Preguntas Frecuentes</a>
+      <a href="#contacto" onclick="toggleMobileMenu()" class="block py-2 text-gray-700 hover:text-brand-magenta font-medium">Contacto</a>
+    </div>
+  </header>
+
+  <!-- Content Container -->
+  <div class="relative z-10 flex flex-col flex-grow">
+
+    <!-- ================= HERO SECTION ================= -->
+    <section id="inicio" class="pt-28 pb-16 md:pt-36 md:pb-24 relative overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <!-- Hero Text -->
+          <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-teal/10 text-brand-teal text-xs sm:text-sm font-semibold tracking-wide uppercase border border-brand-teal/20 backdrop-blur-sm">
+              <i class="fa-solid fa-leaf"></i>
+              Esencias Naturales Andino-Amazónicas · Putumayo
+            </div>
+            
+            <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+              Descubre la Riqueza Botánica de la <span class="text-brand-magenta italic">Selva en Tu Piel</span>
+            </h1>
+
+            <p class="text-base sm:text-lg text-gray-700 max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed">
+              Formulaciones puras elaboradas con Açaí, Manteca de Cacao y extractos florales andino-amazónicos. Un catálogo dedicado a exhibir las propiedades y el uso ritual de cada creación.
+            </p>
+
+            <div class="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+              <a href="#productos" class="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-magenta hover:bg-brand-magenta-dark text-white font-medium shadow-lg shadow-brand-magenta/20 transition-all transform hover:-translate-y-0.5 text-center">
+                Ver Catálogo Informativo
+              </a>
+              <a href="#ritual" class="w-full sm:w-auto px-8 py-4 rounded-full bg-white/90 hover:bg-brand-sand text-brand-dark font-medium border border-gray-200 transition-all text-center backdrop-blur-sm">
+                Conocer El Ritual
+              </a>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="pt-8 border-t border-gray-300/60 grid grid-cols-3 gap-4 text-center lg:text-left">
+              <div>
+                <p class="font-bold text-brand-magenta text-xl sm:text-2xl">100%</p>
+                <p class="text-xs text-gray-600 font-medium">Origen Natural</p>
+              </div>
+              <div>
+                <p class="font-bold text-brand-teal text-xl sm:text-2xl">Açaí</p>
+                <p class="text-xs text-gray-600 font-medium">Poder Antioxidante</p>
+              </div>
+              <div>
+                <p class="font-bold text-gray-800 text-xl sm:text-2xl">Sin Químicos</p>
+                <p class="text-xs text-gray-600 font-medium">Uso Botánico Puro</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Image Composition -->
+          <div class="lg:col-span-5 relative">
+            <div class="relative mx-auto max-w-md lg:max-w-none">
+              
+              <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white aspect-square">
+                <img 
+                  src="img/Unguento magico de asai_2.jpeg" 
+                  alt="Ungüento Mágico de Açaí" 
+                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                  onerror="this.onerror=null; this.src='img/Unguento magico de asai.jpeg';"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                <div class="absolute bottom-6 left-6 right-6 text-white">
+                  <span class="text-xs font-semibold uppercase tracking-wider bg-brand-magenta/90 px-2.5 py-1 rounded-md backdrop-blur-sm">Línea Especializada</span>
+                  <h3 class="font-serif text-xl font-bold mt-1">Ungüento Mágico de Açaí</h3>
+                  <p class="text-xs text-gray-200 font-light">Regeneración y nutrición intensiva para la piel</p>
+                </div>
+              </div>
+
+              <!-- Badge Float 1 -->
+              <div class="absolute -bottom-6 -left-6 bg-white/95 p-3.5 rounded-2xl shadow-xl flex items-center gap-3 border border-gray-100 max-w-[210px] backdrop-blur-sm">
+                <div class="w-10 h-10 rounded-full bg-brand-teal/10 text-brand-teal flex items-center justify-center font-bold text-lg">
+                  <i class="fa-solid fa-spa"></i>
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-gray-800">Aromaterapia</p>
+                  <p class="text-[10px] text-gray-500">Relajación con Manzanilla</p>
+                </div>
+              </div>
+
+              <!-- Badge Float 2 -->
+              <div class="absolute -top-6 -right-6 bg-white/95 p-3.5 rounded-2xl shadow-xl flex items-center gap-3 border border-gray-100 max-w-[210px] backdrop-blur-sm">
+                <div class="w-10 h-10 rounded-full bg-brand-magenta/10 text-brand-magenta flex items-center justify-center font-bold text-lg">
+                  <i class="fa-solid fa-droplet"></i>
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-gray-800">Cuidado Diario</p>
+                  <p class="text-[10px] text-gray-500">Exfoliación suave de Açaí</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SECTION: EL RITUAL INTERACTIVO ================= -->
+    <section id="ritual" class="py-20 glass-cream border-y border-brand-sand relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="text-brand-teal text-sm font-bold tracking-widest uppercase">Experiencia Holística</span>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-gray-900 mt-2">
+            El Ritual de Bienestar <span class="text-brand-magenta italic">Divina Selva</span>
+          </h2>
+          <p class="text-gray-600 mt-3 text-sm sm:text-base font-light">
+            Tres pasos integrados para transformar el cuidado diario en un momento de conexión con la naturaleza del Putumayo.
+          </p>
+        </div>
+
+        <!-- Steps Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <!-- Paso 1 -->
+          <div class="glass-card rounded-2xl p-8 border border-brand-sand/80 relative flex flex-col justify-between hover:shadow-xl transition-all group">
+            <div class="absolute top-4 right-6 font-serif text-5xl font-bold text-brand-sand group-hover:text-brand-magenta/20 transition-colors">01</div>
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-brand-magenta/10 text-brand-magenta flex items-center justify-center text-xl mb-6">
+                <i class="fa-solid fa-fire-flame-curved"></i>
+              </div>
+              <span class="text-xs font-bold uppercase tracking-wider text-brand-teal">Paso 1 · Ambientación</span>
+              <h3 class="font-serif text-xl font-bold text-gray-900 mt-1 mb-3">Armoniza con la Vela Aromática</h3>
+              <p class="text-gray-600 text-sm leading-relaxed font-light">
+                Enciende la vela de ceras vegetales y manzanilla en un lugar tranquilo. Prepara el espacio, reduce el estrés y abre los sentidos.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-brand-sand/80 flex items-center justify-between text-xs font-semibold text-brand-magenta">
+              <span>Momento: Durante el ritual</span>
+              <i class="fa-solid fa-leaf"></i>
+            </div>
+          </div>
+
+          <!-- Paso 2 -->
+          <div class="glass-card rounded-2xl p-8 border border-brand-sand/80 relative flex flex-col justify-between hover:shadow-xl transition-all group">
+            <div class="absolute top-4 right-6 font-serif text-5xl font-bold text-brand-sand group-hover:text-brand-teal/20 transition-colors">02</div>
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-brand-teal/10 text-brand-teal flex items-center justify-center text-xl mb-6">
+                <i class="fa-solid fa-soap"></i>
+              </div>
+              <span class="text-xs font-bold uppercase tracking-wider text-brand-teal">Paso 2 · Limpieza & Exfoliación</span>
+              <h3 class="font-serif text-xl font-bold text-gray-900 mt-1 mb-3">Renueva con el Jabón de Açaí</h3>
+              <p class="text-gray-600 text-sm leading-relaxed font-light">
+                Genera espuma en tus manos, masajea el rostro circularmente durante 1 minuto y deja actuar 2 minutos antes de enjuagar con abundante agua.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-brand-sand/80 flex items-center justify-between text-xs font-semibold text-brand-teal">
+              <span>Frecuencia: Mañana y Noche</span>
+              <i class="fa-solid fa-droplet"></i>
+            </div>
+          </div>
+
+          <!-- Paso 3 -->
+          <div class="glass-card rounded-2xl p-8 border border-brand-sand/80 relative flex flex-col justify-between hover:shadow-xl transition-all group">
+            <div class="absolute top-4 right-6 font-serif text-5xl font-bold text-brand-sand group-hover:text-brand-magenta/20 transition-colors">03</div>
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-brand-magenta/10 text-brand-magenta flex items-center justify-center text-xl mb-6">
+                <i class="fa-solid fa-moon"></i>
+              </div>
+              <span class="text-xs font-bold uppercase tracking-wider text-brand-teal">Paso 3 · Nutrición Nocturna</span>
+              <h3 class="font-serif text-xl font-bold text-gray-900 mt-1 mb-3">Repara con el Ungüento Mágico</h3>
+              <p class="text-gray-600 text-sm leading-relaxed font-light">
+                Toma solo una pequeña porción con la punta de la palita y distribúyela suavemente sobre el rostro, contorno de ojos, cuello y manos.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-brand-sand/80 flex items-center justify-between text-xs font-semibold text-brand-magenta">
+              <span>Aplicación: Solo en la Noche</span>
+              <i class="fa-solid fa-sparkles"></i>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SECTION: PRODUCT CATALOG ================= -->
+    <section id="productos" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-brand-magenta text-sm font-bold tracking-widest uppercase">Catálogo Informativo</span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-gray-900 mt-2">
+          Nuestras Creaciones <span class="text-brand-teal italic">Botánicas</span>
+        </h2>
+        <p class="text-gray-600 mt-3 text-sm sm:text-base font-light">
+          Explora las especificaciones detalladas, composición botánica y recomendaciones de uso de cada producto.
+        </p>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        <!-- PRODUCT 1: Ungüento Mágico -->
+        <div class="glass-card rounded-3xl overflow-hidden border border-gray-200/80 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="relative h-72 overflow-hidden bg-brand-sand group">
+              <img 
+                src="img/Unguento magico de asai_2.jpeg" 
+                alt="Ungüento Mágico de Açaí" 
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                onerror="this.onerror=null; this.src='img/Unguento magico de asai.jpeg';"
+              />
+              <span class="absolute top-4 left-4 bg-brand-magenta text-white text-xs font-bold uppercase tracking-wider px-3.5 py-1 rounded-full shadow">
+                Categoría Alta
+              </span>
+              <span class="absolute top-4 right-4 badge-blur text-brand-dark text-xs font-semibold px-3 py-1 rounded-full border border-white">
+                Presentación: 30 g
+              </span>
+            </div>
+
+            <div class="p-6">
+              <h3 class="font-serif text-2xl font-bold text-gray-900 mb-2">Ungüento Mágico de Açaí</h3>
+              <p class="text-gray-600 text-xs sm:text-sm font-light mb-6">
+                Fórmula nutritiva y regeneradora con alta concentración antioxidante (antocianinas, Vitamina E y Omega 9) para revitalizar la piel durante la noche.
+              </p>
+
+              <div class="border-t border-gray-200/80 pt-4 space-y-2">
+                <details class="group rounded-xl bg-brand-cream/80 p-3.5 [&_summary::-webkit-details-marker]:hidden border border-brand-sand/60" open>
+                  <summary class="flex cursor-pointer items-center justify-between font-semibold text-xs text-gray-800">
+                    <span class="flex items-center gap-2">
+                      <i class="fa-solid fa-sparkles text-brand-magenta"></i>
+                      Propiedades y Beneficios
+                    </span>
+                    <span class="transition duration-300 group-open:-rotate-180">
+                      <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </span>
+                  </summary>
+                  <ul class="mt-3 space-y-1.5 text-xs text-gray-600 font-light pl-2 list-disc list-inside">
+                    <li><strong>Regenerador Celular:</strong> Ayuda a reparar tejidos y retrasar el envejecimiento.</li>
+                    <li><strong>Hidratación Profunda:</strong> Mantiene la elasticidad y combate la resequedad.</li>
+                    <li><strong>Calmante & Antiinflamatorio:</strong> Alivia irritaciones, picaduras y enrojecimiento.</li>
+                    <li><strong>Cicatrizante Natural:</strong> Recuperación de grietas y piel apagada.</li>
+                  </ul>
+                </details>
+
+                <details class="group rounded-xl bg-brand-cream/80 p-3.5 [&_summary::-webkit-details-marker]:hidden border border-brand-sand/60">
+                  <summary class="flex cursor-pointer items-center justify-between font-semibold text-xs text-gray-800">
+                    <span class="flex items-center gap-2">
+                      <i class="fa-solid fa-hand-holding-heart text-brand-teal"></i>
+                      Modo de Aplicación
+                    </span>
+                    <span class="transition duration-300 group-open:-rotate-180">
+                      <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </span>
+                  </summary>
+                  <div class="mt-2 text-xs text-gray-600 font-light leading-relaxed space-y-1">
+                    <p><strong>Frecuencia:</strong> Aplicar sobre la piel limpia exclusivamente por las noches.</p>
+                    <p><strong>Cantidad:</strong> Únicamente la punta de la palita incluida (evitar cantidades grandes).</p>
+                    <p><strong>Zonas:</strong> Rostro completo, contorno de ojos, cuello y manos.</p>
+                  </div>
+                </details>
+
+                <details class="group rounded-xl bg-brand-cream/80 p-3.5 [&_summary::-webkit-details-marker]:hidden border border-brand-sand/60">
+                  <summary class="flex cursor-pointer items-center justify-between font-semibold text-xs text-gray-800">
+                    <span class="flex items-center gap-2">
+                      <i class="fa-solid fa-shield-halved text-brand-magenta"></i>
+                      Composición y Recomendaciones
+                    </span>
+                    <span class="transition duration-300 group-open:-rotate-180">
+                      <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </span>
+                  </summary>
+                  <div class="mt-2 text-xs text-gray-600 font-light leading-relaxed space-y-1">
+                    <p><strong>Ingredientes:</strong> Aceite de açaí, aceite de mango y manteca de cacao.</p>
+                    <p><strong>Precaución:</strong> Evitar la exposición prolongada al sol tras su uso. En caso de reacción desfavorable, lavar con abundante agua fresca.</p>
+                    <p><strong>Almacenamiento:</strong> Conservar en sitio fresco sin exposición directa a la luz solar.</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRODUCT 2: Jabón Exfoliante -->
+        <div class="glass-card rounded-3xl overflow-hidden border border-gray-200/80 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="relative h-72 overflow-hidden bg-brand-sand group">
+              <img 
+                src="img/Jabon exfoliante de asai_2.jpeg" 
+                alt="Jabón Exfoliante de Açaí" 
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                onerror="this.onerror=null; this.src='img/Jabon exfoliante de asai.jpeg';"
+              />
+              <span class="absolute top-4 left-4 bg-brand-teal text-white text-xs font-bold uppercase tracking-wider px-3.5 py-1 rounded-full shadow">
+                Categoría Media
+              </span>
+              <span class="absolute top-4 right-4 badge-blur text-brand-dark text-xs font-semibold px-3 py-1 rounded-full border border-white">
+                Presentación: 60 g
+              </span>
+            </div>
+
+            <div class="p-6">
+              <h3 class="font-serif text-2xl font-bold text-gray-900 mb-2">Jabón Exfoliante de Açaí</h3>
+              <p class="text-gray-600 text-xs sm:text-sm font-light mb-6">
+                Limpieza botánica suave que retira células muertas e impurezas, brindando nutrición e iluminación natural al rostro.
+              </p>
+
+              <div class="border-t border-gray-200/80 pt-4 space-y-2">
+                <details class="group rounded-xl bg-brand-cream/80 p-3.5 [&_summary::-webkit-details-marker]:hidden border border-brand-sand/60" open>
+                  <summary class="flex cursor-pointer items-center justify-between font-semibold text-xs text-gray-800">
+                    <span class="flex items-center gap-2">
+                      <i class="fa-solid fa-leaf text-brand-teal"></i>
+                      Propiedades y Beneficios
+                    </span>
+                    <span class="transition duration-300 group-open:-rotate-180">
+                      <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </span>
+                  </summary>
+                  <ul class="mt-3 space-y-1.5 text-xs text-gray-600 font-light pl-2 list-disc list-inside">
+                    <li><strong>Exfoliación Vegetal:</strong> Elimina suavemente las impurezas acumuladas.</li>
+                    <li><strong>Antioxidante:</strong> Protege la piel del estrés oxidativo diario.</li>
+                    <li><strong>Textura Tersa:</strong> Deja el rostro con una sensación de suavidad y vitalidad.</li>
+                  </ul>
+                </details>
+
+                <details class="group rounded-xl bg-brand-cream/80 p-3.5 [&_summary::-webkit-details-marker]:hidden border border-brand-sand/60">
+                  <summary class="flex cursor-pointer items-center justify-between font-semibold text-xs text-gray-800">
+                    <span class="flex items-center gap-2">
+                      <i class="fa-solid fa-soap text-brand-magenta"></i>
+                      Pasos y Frecuencia
+                    </span>
+                    <span class="transition duration-300 group-open:-rotate-180">
+                      <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </span>
+                  </summary>
+                  <ol class="mt-2 text-xs text-gray-600 font-light leading-relaxed list-decimal list-inside space-y-1">
+                    <li>Lavar previamente las manos.</li>
+                    <li>Frotar el jabón en las manos hasta generar abundante espuma.</li>
+                    <li>Aplicar la espuma en el rostro y masajear suavemente por 1 minuto.</li>
+                    <li>Dejar actuar durante 2 minutos y retirar con agua abundante.</li>
+                    <li>Aplica posteriormente crema hidratante y protector solar.</li>
+                  </ol>
+                </details>
+
+                <details class="group rounded-xl bg-brand-cream/80 p-3.5 [&_summary::-webkit-details-marker]:hidden border border-brand-sand/60">
+                  <summary class="flex cursor-pointer items-center justify-between font-semibold text-xs text-gray-800">
+                    <span class="flex items-center gap-2">
+                      <i class="fa-solid fa-shield-halved text-brand-teal"></i>
+                      Composición y Recomendaciones
+                    </span>
+                    <span class="transition duration-300 group-open:-rotate-180">
+                      <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </span>
+                  </summary>
+                  <div class="mt-2 text-xs text-gray-600 font-light leading-relaxed space-y-1">
+                    <p><strong>Ingredientes:</strong> Pulpa molida de açaí, aceite de açaí y manteca de cacao.</p>
+                    <p><strong>Precaución:</strong> Evitar la aplicación directa en los ojos. Ante cualquier molestia, enjuagar con abundante agua.</p>
+                    <p><strong>Conservación:</strong> Guardar en un lugar fresco y sin humedad excesiva.</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRODUCT 3: Vela Aromática -->
+        <div class="glass-card rounded-3xl overflow-hidden border border-gray-200/80 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="relative h-72 overflow-hidden bg-brand-sand group">
+              <img 
+                src="img/Vela Aromatica.jpeg" 
+                alt="Vela Aromática Ritual Divina Selva" 
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                onerror="this.onerror=null; this.src='img/Vela Aromatica.jpg';"
+              />
+              <span class="absolute top-4 left-4 bg-gray-800 text-white text-xs font-bold uppercase tracking-wider px-3.5 py-1 rounded-full shadow">
+                Categoría Bienestar
+              </span>
+              <span class="absolute top-4 right-4 badge-blur text-brand-dark text-xs font-semibold px-3 py-1 rounded-full border border-white">
+                Presentación: 90 g
+              </span>
+            </div>
+
+            <div class="p-6">
+              <h3 class="font-serif text-2xl font-bold text-gray-900 mb-2">Vela Aromática Ritual</h3>
+              <p class="text-gray-600 text-xs sm:text-sm font-light mb-6">
+                Vela artesanal a base de ceras naturales y esencia de manzanilla, creada para acondicionar y armonizar el ambiente durante tu ritual.
+              </p>
+
+              <div class="border-t border-gray-200/80 pt-4 space-y-2">
+                <details class="group rounded-xl bg-brand-cream/80 p-3.5 [&_summary::-webkit-details-marker]:hidden border border-brand-sand/60" open>
+                  <summary class="flex cursor-pointer items-center justify-between font-semibold text-xs text-gray-800">
+                    <span class="flex items-center gap-2">
+                      <i class="fa-solid fa-wind text-brand-magenta"></i>
+                      Beneficios Sensoriales
+                    </span>
+                    <span class="transition duration-300 group-open:-rotate-180">
+                      <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </span>
+                  </summary>
+                  <ul class="mt-3 space-y-1.5 text-xs text-gray-600 font-light pl-2 list-disc list-inside">
+                    <li><strong>Armonización:</strong> Crea una atmósfera tranquila e íntima.</li>
+                    <li><strong>Aceite de Manzanilla:</strong> Favorece la reducción del estrés y la paz mental.</li>
+                    <li><strong>Quemado Limpio:</strong> Ceras puras sin toxinas ni humo denso.</li>
+                  </ul>
+                </details>
+
+                <details class="group rounded-xl bg-brand-cream/80 p-3.5 [&_summary::-webkit-details-marker]:hidden border border-brand-sand/60">
+                  <summary class="flex cursor-pointer items-center justify-between font-semibold text-xs text-gray-800">
+                    <span class="flex items-center gap-2">
+                      <i class="fa-solid fa-fire text-brand-teal"></i>
+                      Modo de Uso
+                    </span>
+                    <span class="transition duration-300 group-open:-rotate-180">
+                      <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </span>
+                  </summary>
+                  <p class="mt-2 text-xs text-gray-600 font-light leading-relaxed">
+                    Encender en un espacio cómodo y ventilado mientras realizas el ritual de cuidado o momentos de descanso personal.
+                  </p>
+                </details>
+
+                <details class="group rounded-xl bg-brand-cream/80 p-3.5 [&_summary::-webkit-details-marker]:hidden border border-brand-sand/60">
+                  <summary class="flex cursor-pointer items-center justify-between font-semibold text-xs text-gray-800">
+                    <span class="flex items-center gap-2">
+                      <i class="fa-solid fa-triangle-exclamation text-brand-magenta"></i>
+                      Composición y Advertencias
+                    </span>
+                    <span class="transition duration-300 group-open:-rotate-180">
+                      <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </span>
+                  </summary>
+                  <div class="mt-2 text-xs text-gray-600 font-light leading-relaxed space-y-1">
+                    <p><strong>Ingredientes:</strong> Cera vegetal de alto punto de fusión, cera de abeja y aceite de manzanilla.</p>
+                    <p><strong>Advertencias:</strong> No dejar encendida cerca de niños, mascotas ni materiales inflamables o corrientes de aire.</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SECTION: PREGUNTAS FRECUENTES (FAQ) ================= -->
+    <section id="faq" class="py-20 glass-cream border-t border-brand-sand">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-12">
+          <span class="text-brand-teal text-sm font-bold tracking-widest uppercase">Resolvemos tus inquietudes</span>
+          <h2 class="font-serif text-3xl font-bold text-gray-900 mt-1">Preguntas Frecuentes</h2>
+        </div>
+
+        <div class="space-y-4">
+          <details class="glass-card rounded-2xl p-5 border border-gray-200/80 shadow-sm group [&_summary::-webkit-details-marker]:hidden">
+            <summary class="flex cursor-pointer items-center justify-between font-semibold text-gray-900 text-sm sm:text-base">
+              <span>¿Para qué tipo de piel son indicados estos productos?</span>
+              <span class="transition duration-300 group-open:-rotate-180 text-brand-magenta">
+                <i class="fa-solid fa-chevron-down"></i>
+              </span>
+            </summary>
+            <p class="mt-3 text-xs sm:text-sm text-gray-600 font-light leading-relaxed">
+              Nuestras fórmulas botánicas con Açaí y Manteca de Cacao son aptas para todo tipo de piel, especialmente aquellas resecas, sensibles o desvitalizadas que necesitan restauración antioxidante.
+            </p>
+          </details>
+
+          <details class="glass-card rounded-2xl p-5 border border-gray-200/80 shadow-sm group [&_summary::-webkit-details-marker]:hidden">
+            <summary class="flex cursor-pointer items-center justify-between font-semibold text-gray-900 text-sm sm:text-base">
+              <span>¿Por qué el Ungüento Mágico debe aplicarse exclusivamente de noche?</span>
+              <span class="transition duration-300 group-open:-rotate-180 text-brand-magenta">
+                <i class="fa-solid fa-chevron-down"></i>
+              </span>
+            </summary>
+            <p class="mt-3 text-xs sm:text-sm text-gray-600 font-light leading-relaxed">
+              Debido a su alta concentración de aceites puros, la noche es el momento óptimo para potenciar el ciclo de regeneración celular natural de la piel y evitar la exposición directa al sol durante su uso.
+            </p>
+          </details>
+
+          <details class="glass-card rounded-2xl p-5 border border-gray-200/80 shadow-sm group [&_summary::-webkit-details-marker]:hidden">
+            <summary class="flex cursor-pointer items-center justify-between font-semibold text-gray-900 text-sm sm:text-base">
+              <span>¿Cómo debo almacenar y conservar los productos?</span>
+              <span class="transition duration-300 group-open:-rotate-180 text-brand-magenta">
+                <i class="fa-solid fa-chevron-down"></i>
+              </span>
+            </summary>
+            <p class="mt-3 text-xs sm:text-sm text-gray-600 font-light leading-relaxed">
+              Consérvalos en un sitio fresco y seco, protegidos de la radiación solar directa. El jabón debe dejarse sobre una jabonera con buen drenaje de agua para preservar su consistencia.
+            </p>
+          </details>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer id="contacto" class="putumayo-bg-overlay text-white pt-16 pb-12 mt-auto">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 pb-12 border-b border-white/20">
+          
+          <!-- Brand Info -->
+          <div class="space-y-4">
+            <span class="font-serif text-2xl font-bold text-white tracking-tight block">
+              Divina Selva <span class="italic font-normal text-brand-teal">Jáshnan</span>
+            </span>
+            <p class="text-xs text-gray-200 leading-relaxed font-light">
+              Esencias naturales andino-amazónicas para el cuidado consciente de tu piel y tu bienestar integral.
+            </p>
+          </div>
+
+          <!-- Quick Links -->
+          <div>
+            <h4 class="font-serif text-lg font-bold mb-4 text-brand-sand border-b border-brand-teal/40 pb-2 inline-block">Navegación</h4>
+            <ul class="space-y-2.5 text-xs text-gray-200 font-light">
+              <li><a href="#inicio" class="hover:text-brand-teal transition-colors">Inicio</a></li>
+              <li><a href="#ritual" class="hover:text-brand-teal transition-colors">El Ritual</a></li>
+              <li><a href="#productos" class="hover:text-brand-teal transition-colors">Catálogo de Productos</a></li>
+              <li><a href="#faq" class="hover:text-brand-teal transition-colors">Preguntas Frecuentes</a></li>
+            </ul>
+          </div>
+
+          <!-- Contact & Origin -->
+          <div>
+            <h4 class="font-serif text-base font-bold mb-4 text-brand-sand">Origen & Contacto</h4>
+            <ul class="space-y-3 text-xs text-gray-300 font-light">
+              <li class="flex items-center gap-2.5">
+                <i class="fa-solid fa-location-dot text-brand-magenta text-sm"></i>
+                <span>Mocoa, Putumayo, Colombia</span>
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i class="fa-solid fa-envelope text-brand-teal text-sm"></i>
+                <a href="mailto:divinaselvaputumayo@gmail.com" class="hover:text-white transition-colors">divinaselvaputumayo@gmail.com</a>
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i class="fa-solid fa-phone text-brand-teal text-sm"></i>
+                <a href="tel:+573208828738" class="hover:text-white transition-colors">+57 320 8828738</a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="pt-8 text-center text-xs text-gray-300 font-light">
+          <p>© 2026 Divina Selva Jáshnan · Esencias Naturales Andino-Amazónicas. Mocoa, Putumayo, Colombia.</p>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+  </script>
+</body>
+</html>
